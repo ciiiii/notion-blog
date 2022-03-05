@@ -12,4 +12,4 @@
 - [react-notion-x](https://github.com/NotionX/react-notion-x) is the React renderer for Notion.
 - [nextjs-notion-starter-kit](https://github.com/transitive-bullshit/nextjs-notion-starter-kit) is the project template.
 - [Next.js](https://nextjs.org/) is the React framework.
-- The site is deployted to [Vercel](https://vercel.com).
+- The site is deployed to [Vercel](https://vercel.com).
