@@ -8,7 +8,7 @@ module.exports = {
 
   // basic site info (required)
   name: 'ciii\'s blog',
-  domain: '',
+  domain: 'notion-blog-ciii.vercel.app',
   author: 'ciii',
 
   // open graph metadata (optional)
