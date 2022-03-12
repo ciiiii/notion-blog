@@ -8,7 +8,7 @@ module.exports = {
 
   // basic site info (required)
   name: "ciii's blog",
-  domain: 'notion-blog-ciii.vercel.app',
+  domain: 'libcuda.so',
   author: 'ciii',
 
   // open graph metadata (optional)
