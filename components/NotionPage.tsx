@@ -30,6 +30,7 @@ import { PageHead } from './PageHead'
 import { PageSocial } from './PageSocial'
 import { ReactUtterances } from './ReactUtterances'
 import styles from './styles.module.css'
+import { WordleCode } from './wordle/WordleCode'
 
 // const Code = dynamic(() =>
 //   import('react-notion-x').then((notion) => notion.Code)
@@ -243,7 +244,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
               <a {...props} />
             </Link>
           ),
-          code: Code,
+          code:
+            title === 'Wordle'
+              ? WordleCode({ darkMode: darkMode.value })
+              : Code,
           collection: Collection,
           collectionRow: CollectionRow,
           tweet: Tweet,
