@@ -1,16 +1,27 @@
 import moment from 'moment'
+import type { CodeBlock } from 'notion-types'
+import { getBlockTitle } from 'notion-utils'
 import * as React from 'react'
 import { useState } from 'react'
+import { useNotionContext } from 'react-notion-x'
 import { FlipDate } from './FlipDate'
 import { Grid } from './Grid'
 import { CharStatus, DayResult, parseDay } from './util'
 
 const firstWordleDay = moment('2021-06-19')
 
-type Props = { language: string; code: string }
+export const Hello: React.FC<{ message: string }> = ({ message = 'world' }) => {
+  return <div>{message}</div>
+}
 
-export function WordleCode({ darkMode = false }: { darkMode?: boolean }) {
-  return ({ code }: Props) => {
+type DarkModeProps = { darkMode?: boolean }
+type WordleCodeProps = { block: CodeBlock }
+export type WordleCodeFunc = (props: DarkModeProps) => React.FC<WordleCodeProps>
+
+export const WordleCode: WordleCodeFunc = ({ darkMode = false }) => {
+  const RealWordleCode: React.FC<WordleCodeProps> = ({ block }) => {
+    const ctx = useNotionContext()
+    const code = getBlockTitle(block, ctx.recordMap)
     const dayResults = code.split('\n\n').reduce((map, result) => {
       const dayResult = parseDay(result)
       if (dayResult) {
@@ -77,4 +88,5 @@ export function WordleCode({ darkMode = false }: { darkMode?: boolean }) {
       </div>
     )
   }
+  return RealWordleCode
 }

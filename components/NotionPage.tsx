@@ -8,6 +8,7 @@ import { searchNotion } from 'lib/search-notion'
 import * as types from 'lib/types'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { PageBlock } from 'notion-types'
@@ -16,7 +17,7 @@ import { getBlockTitle } from 'notion-utils'
 import * as React from 'react'
 import BodyClassName from 'react-body-classname'
 // core notion renderer
-import { Code, Collection, CollectionRow, NotionRenderer } from 'react-notion-x'
+import { NotionRenderer } from 'react-notion-x'
 import { Tweet, TwitterContextProvider } from 'react-static-tweets'
 import { useSearchParam } from 'react-use'
 import useDarkMode from 'use-dark-mode'
@@ -32,38 +33,22 @@ import { ReactUtterances } from './ReactUtterances'
 import styles from './styles.module.css'
 import { WordleCode } from './wordle/WordleCode'
 
-// const Code = dynamic(() =>
-//   import('react-notion-x').then((notion) => notion.Code)
-// )
-//
-// const Collection = dynamic(() =>
-//   import('react-notion-x').then((notion) => notion.Collection)
-// )
-//
-// const CollectionRow = dynamic(
-//   () => import('react-notion-x').then((notion) => notion.CollectionRow),
-//   {
-//     ssr: false
-//   }
-// )
-
-// TODO: PDF support via "react-pdf" package has numerous troubles building
-// with next.js
-// const Pdf = dynamic(
-//   () => import('react-notion-x').then((notion) => notion.Pdf),
-//   { ssr: false }
-// )
-
-const Equation = dynamic(() =>
-  import('react-notion-x').then((notion) => notion.Equation)
+const Code = dynamic(() =>
+  import('react-notion-x/build/third-party/code').then((m) => m.Code)
 )
 
-// we're now using a much lighter-weight tweet renderer react-static-tweets
-// instead of the official iframe-based embed widget from twitter
-// const Tweet = dynamic(() => import('react-tweet-embed'))
+const Collection = dynamic(() =>
+  import('react-notion-x/build/third-party/collection').then(
+    (m) => m.Collection
+  )
+)
+
+const Equation = dynamic(() =>
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
+)
 
 const Modal = dynamic(
-  () => import('react-notion-x').then((notion) => notion.Modal),
+  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal),
   { ssr: false }
 )
 
@@ -220,39 +205,16 @@ export const NotionPage: React.FC<types.PageProps> = ({
           pageId === site.rootNotionPageId && 'index-page'
         )}
         components={{
-          pageLink: ({
-            href,
-            as,
-            passHref,
-            prefetch,
-            replace,
-            scroll,
-            shallow,
-            locale,
-            ...props
-          }) => (
-            <Link
-              href={href}
-              as={as}
-              passHref={passHref}
-              prefetch={prefetch}
-              replace={replace}
-              scroll={scroll}
-              shallow={shallow}
-              locale={locale}
-            >
-              <a {...props} />
-            </Link>
-          ),
-          code:
+          nextLink: Link,
+          nextImage: Image,
+          Code:
             title === 'Wordle'
               ? WordleCode({ darkMode: darkMode.value })
               : Code,
-          collection: Collection,
-          collectionRow: CollectionRow,
-          tweet: Tweet,
-          modal: Modal,
-          equation: Equation
+          Collection,
+          Tweet,
+          Modal,
+          Equation
         }}
         recordMap={recordMap}
         rootPageId={site.rootNotionPageId}
