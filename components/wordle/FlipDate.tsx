@@ -59,7 +59,7 @@ const darkClickBackGroundColor = '255, 255, 255'
 const lightClickBackGroundColor = '0, 0, 0'
 
 const clickWithAnimation = (
-  trigger: (e: React.MouseEvent<HTMLInputElement>) => void,
+  trigger: () => void,
   darkMode: boolean,
   ref: React.MutableRefObject<any>
 ) => {
@@ -83,7 +83,7 @@ const clickWithAnimation = (
       }
     }
     addButtonClick()
-    trigger(e)
+    trigger()
   }
 }
 
@@ -93,8 +93,8 @@ type Props = {
   dateShuffle: boolean
   monthShuffle: boolean
   yearShuffle: boolean
-  addDate: (e: React.MouseEvent<HTMLInputElement>) => void
-  minusDate: (e: React.MouseEvent<HTMLInputElement>) => void
+  addDate: () => void
+  minusDate: () => void
   darkMode: boolean
 }
 
